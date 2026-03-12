@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión Biblioteca Godelleta</title>
     
-    <link rel="icon" type="image/jpg" href="LogoBibliotecaGodelleta.jpg">
+    <link rel="icon" type="image/jpg" href="LogoBibliotecaGodelleta.png">
 
     <style>
         /* Estilos mejorados: Más grandes y legibles */
@@ -75,5 +75,65 @@
 
 <div class="container">
     <div class="header">
-        <img src="GodelletaLogo.jpg" class="logo" alt="Escudo">
-        <img src="LogoBibliotecaGodelleta.jpg" class="logo" alt="Logo Biblioteca">
+        <img src="GodelletaLogo.png" class="logo" alt="Escudo">
+        <img src="LogoBibliotecaGodelleta.png" class="logo" alt="Logo Biblioteca">
+    </div>
+
+    <h3>👥 Registro de Visitas</h3>
+    <div class="grid">
+        <button class="btn sec-visitas" onclick="enviar('HOMBRE')">HOMBRE</button>
+        <button class="btn sec-visitas" onclick="enviar('MUJER')">MUJER</button>
+        <button class="btn sec-visitas" onclick="enviar('NIÑO')">NIÑO</button>
+        <button class="btn sec-visitas" onclick="enviar('NIÑA')">NIÑA</button>
+    </div>
+
+    <h3>📚 Préstamos por Idioma</h3>
+    <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <button class="btn sec-libros" onclick="enviar('LIBRO-ESP')">ESP</button>
+        <button class="btn sec-libros" onclick="enviar('LIBRO-VLC')">VAL</button>
+        <button class="btn sec-libros" onclick="enviar('LIBRO-ENG')">ING</button>
+    </div>
+
+    <h3>🎭 Actividades Especiales</h3>
+    <div class="grid">
+        <button class="btn sec-actividades" onclick="enviar('CLUB-JUEVES')">Club Lectura</button>
+        <button class="btn sec-actividades" onclick="enviar('CLUB-FOREIGN')">Lectura Extranjeros</button>
+    </div>
+
+    <button class="btn btn-undo" onclick="enviar('UNDO')">↩️ DESHACER ÚLTIMO ERROR</button>
+    
+    <div id="status">Esperando registro...</div>
+</div>
+
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbz53Z00ntDFol9d9ykKUyutKw8ydYqqcs1c-wekUQO1txPcf4Ij1BS1e9HrScXOpfa_/exec";
+
+    function enviar(tipo) {
+        const status = document.getElementById('status');
+        const colorOriginal = "#7f8c8d";
+        
+        status.innerText = "Procesando " + tipo + "...";
+        status.style.color = "#3498db";
+        
+        fetch(API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify({ "tipo": tipo })
+        })
+        .then(() => {
+            status.innerText = "✅ " + tipo + " guardado";
+            status.style.color = "#27ae60";
+            setTimeout(() => { 
+                status.innerText = "Esperando registro..."; 
+                status.style.color = colorOriginal; 
+            }, 2000);
+        })
+        .catch(() => { 
+            status.innerText = "❌ Error al guardar"; 
+            status.style.color = "#c0392b"; 
+        });
+    }
+</script>
+
+</body>
+</html>
