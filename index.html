@@ -3,90 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador de Visitas - Biblioteca Godelleta</title>
+    <title>Gestión Biblioteca Godelleta</title>
     <style>
-        /* Estilo limpio y profesional */
-        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background: #f9f9f9; color: #333; margin: 0; padding: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background: #f4f4f9; color: #333; margin: 0; padding: 15px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         
-        /* Cabecera con Logos */
-        .header { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto 30px; border-bottom: 2px solid #ddd; padding-bottom: 15px; }
-        .logo-escudo { height: 70px; }
-        .logo-biblio { height: 50px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .logo { height: 50px; }
 
-        /* Contenedor principal */
-        .container { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        
-        /* Grid de botones */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .btn { padding: 30px 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; border: none; border-radius: 10px; color: white; transition: 0.2s; box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
-        .btn:active { transform: translateY(4px); box-shadow: none; }
-        
-        .btn-h { background: #2c3e50; } /* Hombre */
-        .btn-m { background: #8e44ad; } /* Mujer */
-        .btn-ni { background: #f39c12; } /* Niño */
-        .btn-na { background: #27ae60; } /* Niña */
+        h3 { margin: 20px 0 10px; color: #2c3e50; border-left: 4px solid #3498db; padding-left: 10px; text-align: left; }
 
-        /* Botón Deshacer */
-        .btn-undo { background: #95a5a6; width: 100%; padding: 15px; margin-top: 10px; }
-        
-        /* Mensajes de estado */
-        #status { margin-top: 20px; min-height: 24px; font-weight: bold; color: #7f8c8d; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .btn { padding: 15px 5px; font-size: 0.9rem; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; color: white; transition: 0.2s; }
+        .btn:active { transform: scale(0.95); }
+
+        /* Colores por secciones */
+        .sec-visitas { background: #34495e; } 
+        .sec-libros { background: #27ae60; }
+        .sec-actividades { background: #e67e22; }
+        .btn-undo { background: #95a5a6; width: 100%; margin-top: 15px; }
+
+        #status { margin-top: 15px; font-weight: bold; color: #7f8c8d; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <img src="GodelletaLogo.png" alt="Escudo de Godelleta" class="logo-escudo">
-            <img src="LogoBibliotecaGodelleta.png" alt="Biblioteca de Godelleta" class="logo-biblio">
-        </div>
-
-        <h2>Registro de Visitas</h2>
-        <p>Selecciona el perfil de la persona que entra:</p>
-
-        <div class="grid">
-            <button class="btn btn-h" onclick="enviar('Hombre')">HOMBRE</button>
-            <button class="btn btn-m" onclick="enviar('Mujer')">MUJER</button>
-            <button class="btn btn-ni" onclick="enviar('Niño')">NIÑO</button>
-            <button class="btn btn-na" onclick="enviar('Niña')">NIÑA</button>
-        </div>
-
-        <button class="btn btn-undo" onclick="enviar('UNDO')">↩️ DESHACER ÚLTIMO</button>
-
-        <div id="status">Listo para registrar</div>
+<div class="container">
+    <div class="header">
+        <img src="GodelletaLogo.jpg" class="logo">
+        <img src="LogoBibliotecaGodelleta.jpg" class="logo">
     </div>
 
-    <script>
-        // Tu URL de Google Apps Script ya integrada
-        const API_URL = "https://script.google.com/macros/s/AKfycbz53Z00ntDFol9d9ykKUyutKw8ydYqqcs1c-wekUQO1txPcf4Ij1BS1e9HrScXOpfa_/exec";
+    <h3>👥 Registro de Visitas</h3>
+    <div class="grid">
+        <button class="btn sec-visitas" onclick="enviar('HOMBRE')">HOMBRE</button>
+        <button class="btn sec-visitas" onclick="enviar('MUJER')">MUJER</button>
+        <button class="btn sec-visitas" onclick="enviar('NIÑO')">NIÑO</button>
+        <button class="btn sec-visitas" onclick="enviar('NIÑA')">NIÑA</button>
+    </div>
 
-        function enviar(tipo) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.innerText = tipo === 'UNDO' ? "Borrando último..." : "Registrando " + tipo + "...";
-            statusDiv.style.color = "#34495e";
+    <h3>📚 Préstamos por Idioma</h3>
+    <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+        <button class="btn sec-libros" onclick="enviar('LIBRO-ESP')">ESP</button>
+        <button class="btn sec-libros" onclick="enviar('LIBRO-VLC')">VAL</button>
+        <button class="btn sec-libros" onclick="enviar('LIBRO-ENG')">ING</button>
+    </div>
 
-            fetch(API_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ "tipo": tipo })
-            })
-            .then(() => {
-                statusDiv.innerText = tipo === 'UNDO' ? "✅ Eliminado correctamente" : "✅ " + tipo + " registrado";
-                statusDiv.style.color = "#27ae60";
-                setTimeout(() => { 
-                    statusDiv.innerText = "Listo para registrar"; 
-                    statusDiv.style.color = "#7f8c8d";
-                }, 2500);
-            })
-            .catch(err => {
-                statusDiv.innerText = "❌ Error de conexión";
-                statusDiv.style.color = "#c0392b";
-                console.error(err);
-            });
-        }
-    </script>
+    <h3>🎭 Actividades Especiales</h3>
+    <div class="grid">
+        <button class="btn sec-actividades" onclick="enviar('CLUB-JUEVES')">Club Lectura</button>
+        <button class="btn sec-actividades" onclick="enviar('CLUB-FOREIGN')">Lectura Extranjeros</button>
+    </div>
+
+    <button class="btn btn-undo" onclick="enviar('UNDO')">↩️ DESHACER ÚLTIMO ERROR</button>
+    <div id="status">Esperando registro...</div>
+</div>
+
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbz53Z00ntDFol9d9ykKUyutKw8ydYqqcs1c-wekUQO1txPcf4Ij1BS1e9HrScXOpfa_/exec";
+
+    function enviar(tipo) {
+        const status = document.getElementById('status');
+        status.innerText = "Procesando " + tipo + "...";
+        
+        fetch(API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify({ "tipo": tipo })
+        })
+        .then(() => {
+            status.innerText = "✅ " + tipo + " guardado";
+            status.style.color = "#27ae60";
+            setTimeout(() => { status.innerText = "Esperando registro..."; status.style.color = "#7f8c8d"; }, 2000);
+        })
+        .catch(() => { status.innerText = "❌ Error al guardar"; status.style.color = "#c0392b"; });
+    }
+</script>
+
 </body>
-
 </html>
-
