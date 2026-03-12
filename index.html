@@ -3,72 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión Biblioteca Godelleta</title>
+    <title>Contador Biblioteca Godelleta</title>
     
     <link rel="icon" type="image/jpg" href="LogoBibliotecaGodelleta.png">
 
     <style>
-        /* Estilos mejorados: Más grandes y legibles */
         body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background: #f4f4f9; color: #333; margin: 0; padding: 10px; }
-        
-        .container { 
-            max-width: 600px; 
-            margin: 10px auto; 
-            background: white; 
-            padding: 30px; 
-            border-radius: 20px; 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
-        }
+        .container { max-width: 550px; margin: 15px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
         
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        .logo { height: 65px; } 
+        .logo { height: 60px; } 
 
-        h3 { 
-            margin: 25px 0 15px; 
-            color: #2c3e50; 
-            border-left: 5px solid #3498db; 
-            padding-left: 12px; 
-            text-align: left; 
-            font-size: 1.3rem;
-        }
+        h3 { margin: 25px 0 15px; color: #2c3e50; border-left: 5px solid #3498db; padding-left: 12px; text-align: left; font-size: 1.2rem; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         
-        .btn { 
-            padding: 25px 10px; 
-            font-size: 1.1rem; 
-            font-weight: bold; 
-            cursor: pointer; 
-            border: none; 
-            border-radius: 12px; 
-            color: white; 
-            transition: 0.2s; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
+        .btn { padding: 25px 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; border: none; border-radius: 12px; color: white; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn:active { transform: scale(0.92); box-shadow: none; }
 
         .sec-visitas { background: #34495e; } 
         .sec-libros { background: #27ae60; }
-        .sec-actividades { background: #e67e22; }
         
-        .btn-undo { 
-            background: #95a5a6; 
-            width: 100%; 
-            margin-top: 25px; 
-            padding: 20px;
-            font-size: 1rem;
-        }
+        .btn-undo { background: #95a5a6; width: 100%; margin-top: 25px; padding: 20px; font-size: 1rem; }
 
-        #status { 
-            margin-top: 20px; 
-            font-weight: bold; 
-            color: #7f8c8d; 
-            font-size: 1.1rem; 
-            padding: 10px;
-            background: #fdfdfd;
-            border-radius: 8px;
-        }
+        #status { margin-top: 20px; font-weight: bold; color: #7f8c8d; font-size: 1.1rem; padding: 10px; background: #fdfdfd; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -87,17 +45,11 @@
         <button class="btn sec-visitas" onclick="enviar('NIÑA')">NIÑA</button>
     </div>
 
-    <h3>📚 Préstamos por Idioma</h3>
+    <h3>📚 Préstamos (Idioma)</h3>
     <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
-        <button class="btn sec-libros" onclick="enviar('LIBRO-ESP')">ESP</button>
-        <button class="btn sec-libros" onclick="enviar('LIBRO-VLC')">VAL</button>
-        <button class="btn sec-libros" onclick="enviar('LIBRO-ENG')">ING</button>
-    </div>
-
-    <h3>🎭 Actividades Especiales</h3>
-    <div class="grid">
-        <button class="btn sec-actividades" onclick="enviar('CLUB-JUEVES')">Club Lectura</button>
-        <button class="btn sec-actividades" onclick="enviar('CLUB-FOREIGN')">Lectura Extranjeros</button>
+        <button class="btn sec-libros" onclick="enviar('L-CAST')">CAST</button>
+        <button class="btn sec-libros" onclick="enviar('L-VLC')">VAL</button>
+        <button class="btn sec-libros" onclick="enviar('L-ING')">ING</button>
     </div>
 
     <button class="btn btn-undo" onclick="enviar('UNDO')">↩️ DESHACER ÚLTIMO ERROR</button>
@@ -110,9 +62,7 @@
 
     function enviar(tipo) {
         const status = document.getElementById('status');
-        const colorOriginal = "#7f8c8d";
-        
-        status.innerText = "Procesando " + tipo + "...";
+        status.innerText = "Registrando " + tipo + "...";
         status.style.color = "#3498db";
         
         fetch(API_URL, {
@@ -123,15 +73,9 @@
         .then(() => {
             status.innerText = "✅ " + tipo + " guardado";
             status.style.color = "#27ae60";
-            setTimeout(() => { 
-                status.innerText = "Esperando registro..."; 
-                status.style.color = colorOriginal; 
-            }, 2000);
+            setTimeout(() => { status.innerText = "Esperando registro..."; status.style.color = "#7f8c8d"; }, 2000);
         })
-        .catch(() => { 
-            status.innerText = "❌ Error al guardar"; 
-            status.style.color = "#c0392b"; 
-        });
+        .catch(() => { status.innerText = "❌ Error de conexión"; status.style.color = "#c0392b"; });
     }
 </script>
 
